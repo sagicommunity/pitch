@@ -270,11 +270,69 @@ function Hero() {
         <div className="reveal mt-16">
           <div className="hr mb-6" />
           <p className="text-xs text-gray-700 uppercase tracking-widest text-center mb-4">Built for</p>
-          <div className="flex flex-wrap justify-center gap-8">
-            {['Business Clubs', 'Financial Hubs', 'Alumni Networks', 'Co-working Spaces', 'Professional Guilds'].map((t, i) => (
+          <div className="flex flex-wrap justify-center gap-6">
+            {[
+              'Business Clubs', 'Financial Hubs', 'Alumni Networks',
+              'Co-working Spaces', 'Professional Guilds', 'Sports Clubs',
+              'Investor Circles', 'Industry Associations', 'Corporate Communities',
+            ].map((t, i) => (
               <span key={i} className="text-sm text-gray-600 font-medium">{t}</span>
             ))}
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── For Business ────────────────────────────────────────────────────────── */
+function ForBusiness() {
+  const useCases = [
+    { icon: I.users,  color: '#2ABB6F',  title: 'Loyalty Community',     desc: 'Turn customers into a verified club. Issue digital membership cards, offer exclusive perks and track engagement.' },
+    { icon: I.star,   color: '#fbbf24',  title: 'Partner Ecosystem',     desc: 'Connect your vendors, agents and resellers in one private network. Verify access, share offers and measure activity.' },
+    { icon: I.spark,  color: '#a78bfa',  title: 'Internal Club',         desc: 'Build a private community for your team, investors or VIP clients — with access control, analytics and digital IDs.' },
+    { icon: I.trend,  color: '#60a5fa',  title: 'Industry Association',  desc: 'Run a professional guild or industry body. Automate renewals, gate content by membership tier and grow the network.' },
+  ];
+  return (
+    <section className="py-24" style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 100%, rgba(42,187,111,.07) 0%, transparent 60%), rgba(9,14,10,.3)' }}>
+      <div className="max-w-6xl mx-auto px-5">
+        <div className="text-center mb-12">
+          <div className="reveal badge badge-green mb-4 mx-auto" style={{ display: 'inline-flex' }}>For Business</div>
+          <h2 className="section-title text-white reveal d1 mb-4">
+            Build your own <span className="grad-text">community</span>
+          </h2>
+          <p className="reveal d2 text-gray-400 max-w-xl mx-auto">
+            Any business can launch a branded community on Sagi in days —
+            with verified members, digital cards, exclusive offers and real-time analytics.
+          </p>
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+          {useCases.map((c, i) => (
+            <div key={i} className={`reveal d${i+1} glass rounded-2xl p-5 card-hover`}
+              style={{ borderColor: `${c.color}1A` }}>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
+                style={{ background: `${c.color}15` }}>
+                <Ic d={c.icon} size={20} style={{ color: c.color }} />
+              </div>
+              <h3 className="font-bold text-white mb-2 text-sm">{c.title}</h3>
+              <p className="text-gray-400 text-xs leading-relaxed">{c.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA strip */}
+        <div className="reveal glass rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-5"
+          style={{ borderColor: 'rgba(42,187,111,.2)', background: 'rgba(42,187,111,.04)' }}>
+          <div>
+            <div className="text-white font-bold text-lg mb-1">Ready to launch your community?</div>
+            <p className="text-gray-400 text-sm">Setup takes 1 day. Your members get digital cards on day one.</p>
+          </div>
+          <a href="mailto:info@sagi.kz"
+            className="grad-btn text-white font-bold px-6 py-3 rounded-xl flex items-center gap-2 text-sm flex-shrink-0">
+            <Ic d={I.mail} size={15} />
+            Contact Us
+          </a>
         </div>
       </div>
     </section>
@@ -1023,6 +1081,7 @@ function App() {
     <div>
       <Header />
       <Hero />
+      <div className="hr" /><ForBusiness />
       <div className="hr" /><Problem />
       <div className="hr" /><Roles />
       <div className="hr" /><Marketplace />
