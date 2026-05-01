@@ -287,51 +287,92 @@ function Hero() {
 
 /* ── For Business ────────────────────────────────────────────────────────── */
 function ForBusiness() {
-  const useCases = [
-    { icon: I.users,  color: '#2ABB6F',  title: 'Loyalty Community',     desc: 'Turn customers into a verified club. Issue digital membership cards, offer exclusive perks and track engagement.' },
-    { icon: I.star,   color: '#fbbf24',  title: 'Partner Ecosystem',     desc: 'Connect your vendors, agents and resellers in one private network. Verify access, share offers and measure activity.' },
-    { icon: I.spark,  color: '#a78bfa',  title: 'Internal Club',         desc: 'Build a private community for your team, investors or VIP clients — with access control, analytics and digital IDs.' },
-    { icon: I.trend,  color: '#60a5fa',  title: 'Industry Association',  desc: 'Run a professional guild or industry body. Automate renewals, gate content by membership tier and grow the network.' },
+  const features = [
+    {
+      icon: I.trend, color: '#2ABB6F',
+      title: 'Boost engagement',
+      desc: 'Push targeted announcements, polls and offers directly to members. Track who opened, clicked and responded — in real time.',
+      items: ['Targeted push notifications', 'Polls & surveys', 'Engagement analytics dashboard'],
+    },
+    {
+      icon: I.zap, color: '#fbbf24',
+      title: 'Assign tasks & challenges',
+      desc: 'Create tasks tied to events or campaigns. Members complete them, earn points and unlock rewards — gamification built in.',
+      items: ['Event-linked task boards', 'Points & reward system', 'Completion tracking per member'],
+    },
+    {
+      icon: I.users, color: '#a78bfa',
+      title: 'Invite & manage members',
+      desc: 'Send branded invitations, set membership tiers and auto-expire access. Full control over who is in your community.',
+      items: ['Branded digital invitations', 'Tiered access: Member / Premium / VIP', 'Auto-block on expiry'],
+    },
+    {
+      icon: I.card, color: '#60a5fa',
+      title: 'Host events',
+      desc: 'Create events, sell or distribute tickets as digital passes, track attendance via QR scan at the door.',
+      items: ['Digital event passes via Apple Wallet', 'QR check-in at entrance', 'Post-event attendance report'],
+    },
+    {
+      icon: I.spark, color: '#ec4899',
+      title: 'Exclusive offers catalog',
+      desc: 'Publish partner discounts and member-only perks. Members see the catalog in the app and redeem with their QR card.',
+      items: ['Partner offer management', 'QR redemption at point of sale', 'Offer performance analytics'],
+    },
+    {
+      icon: I.chart, color: '#f97316',
+      title: 'Real-time analytics',
+      desc: 'One dashboard for everything: active members, renewal rate, event turnout, offer redemptions and revenue per member.',
+      items: ['Member activity heatmap', 'Renewal & churn tracking', 'Revenue per member KPI'],
+    },
   ];
+
   return (
-    <section className="py-24" style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 100%, rgba(42,187,111,.07) 0%, transparent 60%), rgba(9,14,10,.3)' }}>
+    <section className="py-24" style={{ background: 'radial-gradient(ellipse 80% 55% at 50% 0%, rgba(42,187,111,.06) 0%, transparent 55%), #090e0a' }}>
       <div className="max-w-6xl mx-auto px-5">
-        <div className="text-center mb-12">
+        <div className="text-center mb-14">
           <div className="reveal badge badge-green mb-4 mx-auto" style={{ display: 'inline-flex' }}>For Business</div>
           <h2 className="section-title text-white reveal d1 mb-4">
-            Build your own <span className="grad-text">community</span>
+            Your own community — <span className="grad-text">fully managed</span>
           </h2>
           <p className="reveal d2 text-gray-400 max-w-xl mx-auto">
-            Any business can launch a branded community on Sagi in days —
-            with verified members, digital cards, exclusive offers and real-time analytics.
+            Any business can launch a branded community on Sagi in one day.
+            Engage members, run events, assign challenges and track everything in one place.
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
-          {useCases.map((c, i) => (
-            <div key={i} className={`reveal d${i+1} glass rounded-2xl p-5 card-hover`}
-              style={{ borderColor: `${c.color}1A` }}>
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
-                style={{ background: `${c.color}15` }}>
-                <Ic d={c.icon} size={20} style={{ color: c.color }} />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
+          {features.map((f, i) => (
+            <div key={i} className={`reveal d${(i%3)+1} glass rounded-2xl p-6 card-hover`}
+              style={{ borderColor: `${f.color}18` }}>
+              <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
+                style={{ background: `${f.color}14` }}>
+                <Ic d={f.icon} size={22} style={{ color: f.color }} />
               </div>
-              <h3 className="font-bold text-white mb-2 text-sm">{c.title}</h3>
-              <p className="text-gray-400 text-xs leading-relaxed">{c.desc}</p>
+              <h3 className="font-bold text-white mb-2">{f.title}</h3>
+              <p className="text-gray-400 text-sm leading-relaxed mb-4">{f.desc}</p>
+              <ul className="space-y-1.5">
+                {f.items.map((item, j) => (
+                  <li key={j} className="flex items-center gap-2 text-xs text-gray-500">
+                    <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: f.color }} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
         </div>
 
         {/* CTA strip */}
         <div className="reveal glass rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-5"
-          style={{ borderColor: 'rgba(42,187,111,.2)', background: 'rgba(42,187,111,.04)' }}>
+          style={{ borderColor: 'rgba(42,187,111,.22)', background: 'rgba(42,187,111,.04)' }}>
           <div>
-            <div className="text-white font-bold text-lg mb-1">Ready to launch your community?</div>
-            <p className="text-gray-400 text-sm">Setup takes 1 day. Your members get digital cards on day one.</p>
+            <div className="text-white font-bold text-lg mb-1">Launch your community in 1 day</div>
+            <p className="text-gray-400 text-sm">We handle setup, onboarding and training. Your members get digital cards on day one.</p>
           </div>
           <a href="mailto:info@sagi.kz"
-            className="grad-btn text-white font-bold px-6 py-3 rounded-xl flex items-center gap-2 text-sm flex-shrink-0">
+            className="grad-btn text-white font-bold px-7 py-3.5 rounded-xl flex items-center gap-2 text-sm flex-shrink-0">
             <Ic d={I.mail} size={15} />
-            Contact Us
+            Get started
           </a>
         </div>
       </div>
