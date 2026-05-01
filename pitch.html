@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sagi — Platform for Professional Communities</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: #080c0a; color: #f9fafb; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+    ::selection { background: rgba(42,187,111,.3); }
+
+    .glass { background: rgba(255,255,255,.04); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,.08); }
+    .glass-green { background: rgba(42,187,111,.08); border: 1px solid rgba(42,187,111,.2); }
+    .glass-purple { background: rgba(139,92,246,.08); border: 1px solid rgba(139,92,246,.2); }
+    .glass-blue { background: rgba(59,130,246,.08); border: 1px solid rgba(59,130,246,.2); }
+
+    .grad-text { background: linear-gradient(135deg, #4DCF8A, #2ABB6F, #1E9E5A); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .grad-btn { background: linear-gradient(135deg, #2ABB6F, #1E9E5A); transition: all .3s ease; }
+    .grad-btn:hover { background: linear-gradient(135deg, #3DD17D, #2ABB6F); box-shadow: 0 0 32px rgba(42,187,111,.35); transform: translateY(-1px); }
+
+    .hero-bg {
+      background:
+        radial-gradient(ellipse 90% 55% at 50% -5%, rgba(42,187,111,.14) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 90% 40%, rgba(139,92,246,.07) 0%, transparent 55%),
+        #080c0a;
+    }
+    .section-alt { background: rgba(255,255,255,.02); }
+
+    /* ── Badges ── */
+    .badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 12px; border-radius: 100px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .badge-green { background: rgba(42,187,111,.12); color: #2ABB6F; border: 1px solid rgba(42,187,111,.25); }
+    .badge-purple { background: rgba(139,92,246,.12); color: #a78bfa; border: 1px solid rgba(139,92,246,.25); }
+    .badge-blue { background: rgba(59,130,246,.12); color: #60a5fa; border: 1px solid rgba(59,130,246,.25); }
+    .badge-amber { background: rgba(245,158,11,.12); color: #fbbf24; border: 1px solid rgba(245,158,11,.25); }
+
+    /* ── Scroll reveal ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left { opacity: 0; transform: translateX(-24px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right { opacity: 0; transform: translateX(24px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+    .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+    /* ── Cards ── */
+    .card-hover { transition: transform .3s ease, box-shadow .3s ease; }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,.5); }
+
+    /* ── Divider ── */
+    .hr { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.07), transparent); }
+
+    /* ── Timeline ── */
+    .tl-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+    .tl-line { width: 2px; background: linear-gradient(180deg, rgba(42,187,111,.4) 0%, rgba(42,187,111,.04) 100%); flex: 1; min-height: 28px; }
+
+    /* ── Map ── */
+    @keyframes ping { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.7);opacity:.5} }
+    .ping{animation:ping 2s ease-in-out infinite}
+    .ping-2{animation:ping 2.4s ease-in-out .4s infinite}
+    .ping-3{animation:ping 2.8s ease-in-out .8s infinite}
+    .ping-4{animation:ping 2.2s ease-in-out 1.2s infinite}
+
+    /* ── Float ── */
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    .float{animation:float 5s ease-in-out infinite}
+    @keyframes float2{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-8px) rotate(-4deg)}}
+    .float2{animation:float2 6s ease-in-out .5s infinite}
+    @keyframes float3{0%,100%{transform:translateY(0) rotate(4deg)}50%{transform:translateY(-6px) rotate(4deg)}}
+    .float3{animation:float3 5.5s ease-in-out 1s infinite}
+
+    /* ── Metric ── */
+    .metric{transition:all .3s ease;cursor:default}
+    .metric:hover{background:rgba(42,187,111,.06);border-color:rgba(42,187,111,.2);transform:translateY(-2px)}
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#080c0a}
+    ::-webkit-scrollbar-thumb{background:rgba(42,187,111,.3);border-radius:3px}
+
+    /* ── Typography ── */
+    .hero-title{font-size:clamp(2.2rem,5.5vw,4rem);font-weight:800;line-height:1.08;letter-spacing:-.03em}
+    .section-title{font-size:clamp(1.75rem,4vw,2.75rem);font-weight:800;line-height:1.1;letter-spacing:-.025em}
+
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes slideUp{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+  </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+/* ── Icons ─────────────────────────────────────────────────────────────── */
+const Ic = ({ d, size = 20, style, className = '' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+    style={style} className={className}>
+    {Array.isArray(d) ? d.map((p,i) => <path key={i} d={p}/>) : <path d={d}/>}
+  </svg>
+);
+const I = {
+  msg:    "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
+  shield: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z",
+  file:   ["M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z","M14 2v6h6","M9 13h6","M9 17h3"],
+  spark:  "M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5z",
+  users:  ["M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2","M23 21v-2a4 4 0 0 0-3-3.87","M16 3.13a4 4 0 0 1 0 7.75"],
+  card:   ["M1 4h22v16H1z","M1 10h22"],
+  trend:  ["M23 6l-9.5 9.5-5-5L1 18","M17 6h6v6"],
+  globe:  ["M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z","M2 12h20","M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"],
+  check:  "M20 6L9 17l-5-5",
+  mail:   ["M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z","M22 6l-10 7L2 6"],
+  arrow:  ["M5 12h14","M12 5l7 7-7 7"],
+  zap:    "M13 2L3 14h9l-1 8 10-12h-9z",
+  build:  ["M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z","M9 22V12h6v10"],
+  star:   "M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z",
+  lock:   ["M5 11V7a7 7 0 0 1 14 0v4","M3 11h18v11H3z","M12 16v3"],
+  qr:     ["M3 3h6v6H3z","M3 15h6v6H3z","M15 3h6v6h-6z","M15 15h3v3h-3z","M18 18h3v3h-3z"],
+  scan:   ["M3 9V5a2 2 0 0 1 2-2h4","M15 3h4a2 2 0 0 1 2 2v4","M21 15v4a2 2 0 0 1-2 2h-4","M9 21H5a2 2 0 0 1-2-2v-4","M7 12h10"],
+  chart:  ["M18 20V10","M12 20V4","M6 20v-6"],
+  net:    ["M9 3H5a2 2 0 0 0-2 2v4","M15 3h4a2 2 0 0 1 2 2v4","M9 21H5a2 2 0 0 1-2-2v-4","M15 21h4a2 2 0 0 0 2-2v-4","M12 8v8","M8 12h8"],
+};
+
+/* ── Scroll Reveal ──────────────────────────────────────────────────────── */
+function useReveal() {
+  useEffect(() => {
+    const els = document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
+    const obs = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.1, rootMargin: '0px 0px -30px 0px' }
+    );
+    els.forEach(el => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+}
+
+/* ── Logo ────────────────────────────────────────────────────────────────── */
+function Logo({ size = 38 }) {
+  return (
+    <div className="flex items-center gap-2.5">
+      <img src="image%20(3).png" alt="Sagi"
+        style={{ width: size, height: size, objectFit: 'contain', borderRadius: size * .25 }} />
+      <span style={{ fontSize: size * .55, fontWeight: 800, letterSpacing: '-.02em' }}
+        className="grad-text">Sagi</span>
+    </div>
+  );
+}
+
+/* ── iPhone Frame (from context.md) ─────────────────────────────────────── */
+function Phone({ src, alt, width = 200, className = '' }) {
+  const pad = 9;
+  return (
+    <div className={`relative ${className}`} style={{ width }}>
+      <div className="relative overflow-hidden" style={{
+        borderRadius: '3rem',
+        background: '#1A1A1A',
+        padding: pad,
+        boxShadow: '0 0 0 1px #3a3a3a, 0 32px 64px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.08)',
+      }}>
+        <div className="relative overflow-hidden bg-black" style={{ borderRadius: '2.3rem', aspectRatio: '9/19.5' }}>
+          <div className="absolute top-3 left-1/2 -translate-x-1/2 z-10 bg-black rounded-full"
+            style={{ width: 72, height: 22 }} />
+          <img src={src} alt={alt} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
+        </div>
+      </div>
+      {/* Side buttons */}
+      <div className="absolute rounded-l-sm" style={{ left: -3, top: 88, width: 3, height: 34, background: '#2a2a2a' }} />
+      <div className="absolute rounded-l-sm" style={{ left: -3, top: 132, width: 3, height: 34, background: '#2a2a2a' }} />
+      <div className="absolute rounded-l-sm" style={{ left: -3, top: 176, width: 3, height: 34, background: '#2a2a2a' }} />
+      <div className="absolute rounded-r-sm" style={{ right: -3, top: 120, width: 3, height: 56, background: '#2a2a2a' }} />
+    </div>
+  );
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+function Header() {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 24);
+    window.addEventListener('scroll', fn);
+    return () => window.removeEventListener('scroll', fn);
+  }, []);
+  return (
+    <header style={{
+      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+      transition: 'all .4s ease',
+      background: scrolled ? 'rgba(8,12,10,.9)' : 'transparent',
+      backdropFilter: scrolled ? 'blur(24px)' : 'none',
+      borderBottom: scrolled ? '1px solid rgba(255,255,255,.06)' : 'none',
+    }}>
+      <div className="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
+        <Logo size={40} />
+        <a href="mailto:info@sagi.kz"
+          className="grad-btn text-white text-sm font-semibold px-5 py-2.5 rounded-xl flex items-center gap-2">
+          <Ic d={I.mail} size={15} />
+          Contact Us
+        </a>
+      </div>
+    </header>
+  );
+}
+
+/* ── Hero ────────────────────────────────────────────────────────────────── */
+function Hero() {
+  return (
+    <section className="hero-bg min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-5 w-full">
+        <div className="grid lg:grid-cols-2 gap-14 items-center">
+
+          <div>
+            <div className="reveal mb-5 flex items-center gap-3">
+              <span className="badge badge-green">iOS · Android · Web</span>
+              <span className="badge badge-purple">SaaS B2B</span>
+            </div>
+
+            <h1 className="hero-title text-white reveal d1 mb-5">
+              Manage communities.<br />
+              <span className="grad-text">Scale the value.</span>
+            </h1>
+
+            <p className="reveal d2 text-gray-400 text-lg leading-relaxed mb-8 max-w-lg">
+              Sagi is a platform for business clubs, professional associations
+              and interest-based communities. Member verification, AI analytics
+              and digital membership cards — all in one product.
+            </p>
+
+            <div className="reveal d3 grid grid-cols-3 gap-4 mb-9">
+              {[
+                { n: '1,100+', l: 'Active members', c: '#2ABB6F' },
+                { n: '3',      l: 'Communities live', c: '#a78bfa' },
+                { n: '100%',   l: 'Pilot retention', c: '#fbbf24' },
+              ].map((s, i) => (
+                <div key={i} className="glass rounded-2xl p-4 metric">
+                  <div style={{ fontSize: '1.85rem', fontWeight: 900, color: s.c, lineHeight: 1 }}>{s.n}</div>
+                  <div className="text-xs text-gray-500 mt-1.5 leading-snug">{s.l}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="reveal d4 flex flex-wrap gap-3">
+              <a href="mailto:info@sagi.kz"
+                className="grad-btn text-white font-bold px-6 py-3.5 rounded-xl flex items-center gap-2 text-sm">
+                Request a demo
+                <Ic d={I.arrow} size={16} />
+              </a>
+              <a href="#roles"
+                className="glass text-gray-300 font-medium px-6 py-3.5 rounded-xl flex items-center gap-2 text-sm transition-all hover:border-white/20">
+                See the product
+              </a>
+            </div>
+          </div>
+
+          {/* Hero phone */}
+          <div className="flex justify-center lg:justify-end reveal-right">
+            <div className="float" style={{ perspective: 1000 }}>
+              <Phone src="image.png" alt="Sagi App" width={260}
+                style={{ transform: 'rotateY(-5deg) rotateX(2deg)', transition: 'transform .6s ease' }} />
+            </div>
+          </div>
+        </div>
+
+        {/* Tag line */}
+        <div className="reveal mt-16">
+          <div className="hr mb-6" />
+          <p className="text-xs text-gray-700 uppercase tracking-widest text-center mb-4">Built for</p>
+          <div className="flex flex-wrap justify-center gap-8">
+            {['Business Clubs', 'Financial Hubs', 'Alumni Networks', 'Co-working Spaces', 'Professional Guilds'].map((t, i) => (
+              <span key={i} className="text-sm text-gray-600 font-medium">{t}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Problem ─────────────────────────────────────────────────────────────── */
+function Problem() {
+  const cards = [
+    { icon: I.msg, badge: 'Noise', color: '#fbbf24', glow: 'rgba(245,158,11,.1)',
+      title: 'Chat chaos', desc: '500+ messages per day. Important announcements and partner offers drown in the noise — members lose value.', stat: '500+', statL: 'messages / day' },
+    { icon: I.shield, badge: 'Trust Gap', color: '#2ABB6F', glow: 'rgba(42,187,111,.1)',
+      title: 'Zero verification', desc: 'No one checks membership. Fraud, spam and data leaks are the norm for most professional clubs.', stat: '0%', statL: 'verification in chats' },
+    { icon: I.file, badge: 'Analog Tools', color: '#60a5fa', glow: 'rgba(59,130,246,.1)',
+      title: 'PDFs & spreadsheets', desc: 'Partner directories in PDF, manual renewals, no analytics. Clubs lose up to 40% of renewals without reminders.', stat: '-40%', statL: 'renewals without a system' },
+  ];
+  return (
+    <section className="py-24 section-alt">
+      <div className="max-w-6xl mx-auto px-5">
+        <div className="text-center mb-12">
+          <div className="reveal badge badge-amber mb-4 mx-auto" style={{ display: 'inline-flex' }}>Problem</div>
+          <h2 className="section-title text-white reveal d1 mb-4">Market <span className="grad-text">chaos</span></h2>
+          <p className="reveal d2 text-gray-400 max-w-lg mx-auto">
+            Professional clubs are run on 2005-era tools.
+            Members, organizers and partners lose opportunities every single day.
+          </p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-5">
+          {cards.map((c, i) => (
+            <div key={i} className={`reveal d${i+1} glass rounded-2xl p-6 card-hover`}
+              style={{ borderColor: `${c.color}22` }}>
+              <div className="flex items-start justify-between mb-5">
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ background: c.glow }}>
+                  <Ic d={c.icon} size={22} style={{ color: c.color }} />
+                </div>
+                <span className="badge" style={{ background: `${c.color}15`, color: c.color, border: `1px solid ${c.color}30` }}>{c.badge}</span>
+              </div>
+              <h3 className="text-white font-bold text-lg mb-2">{c.title}</h3>
+              <p className="text-gray-400 text-sm leading-relaxed mb-5">{c.desc}</p>
+              <div className="rounded-xl p-3 flex items-center gap-3" style={{ background: c.glow, border: `1px solid ${c.color}25` }}>
+                <span className="font-black text-2xl" style={{ color: c.color }}>{c.stat}</span>
+                <span className="text-xs text-gray-500">{c.statL}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Three Roles ─────────────────────────────────────────────────────────── */
+function Roles() {
+  const roles = [
+    {
+      label: 'Administrator',
+      color: '#8b5cf6',
+      glow: 'rgba(139,92,246,.15)',
+      img: 'image%20(1).png',
+      icon: I.build,
+      features: ['Member verification', 'Real-time analytics', 'Membership expiry control', 'Partner network management'],
+      float: 'float2',
+      rotate: '-4deg',
+    },
+    {
+      label: 'Member',
+      color: '#2ABB6F',
+      glow: 'rgba(42,187,111,.15)',
+      img: 'image.png',
+      icon: I.card,
+      features: ['Apple Wallet card + QR ID', 'Exclusive discounts & offers', 'Events & news feed', 'Verified Networking'],
+      float: 'float',
+      rotate: '0deg',
+    },
+    {
+      label: 'Business Partner',
+      color: '#3b82f6',
+      glow: 'rgba(59,130,246,.15)',
+      img: 'image%20(2).png',
+      icon: I.scan,
+      features: ['QR card scanning', 'Offer management', 'Visit statistics', 'Dedicated Sagi manager'],
+      float: 'float3',
+      rotate: '4deg',
+    },
+  ];
+
+  return (
+    <section id="roles" className="py-24">
+      <div className="max-w-6xl mx-auto px-5">
+        <div className="text-center mb-14">
+          <div className="reveal badge badge-green mb-4 mx-auto" style={{ display: 'inline-flex' }}>Product</div>
+          <h2 className="section-title text-white reveal d1 mb-4">
+            Three roles — <span className="grad-text">one ecosystem</span>
+          </h2>
+          <p className="reveal d2 text-gray-400 max-w-xl mx-auto">
+            Each role amplifies the value of the others. More members means more offers.
+            More businesses means better membership perks.
+          </p>
+        </div>
+
+        {/* Three phones */}
+        <div className="flex justify-center items-end gap-4 md:gap-8 mb-16 reveal">
+          {roles.map((r, i) => (
+            <div key={i} className={`flex flex-col items-center ${r.float}`}
+              style={{ transform: `rotate(${r.rotate})` }}>
+              <div className="mb-4 text-center">
+                <span className="badge" style={{ background: `${r.color}18`, color: r.color, border: `1px solid ${r.color}30` }}>
+                  {r.label}
+                </span>
+              </div>
+              <Phone src={r.img} alt={r.label} width={i === 1 ? 200 : 165} />
+              <div className="mt-4 w-2 h-2 rounded-full mx-auto" style={{ background: r.color, boxShadow: `0 0 12px ${r.color}` }} />
+            </div>
+          ))}
+        </div>
+
+        {/* Role feature cards */}
+        <div className="grid md:grid-cols-3 gap-5">
+          {roles.map((r, i) => (
+            <div key={i} className={`reveal d${i+1} glass rounded-2xl p-5 card-hover`}
+              style={{ borderColor: `${r.color}25` }}>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center"
+                  style={{ background: r.glow }}>
+                  <Ic d={r.icon} size={18} style={{ color: r.color }} />
+                </div>
+                <span className="font-bold text-white">{r.label}</span>
+              </div>
+              <ul className="space-y-2.5">
+                {r.features.map((f, j) => (
+                  <li key={j} className="flex items-center gap-2.5 text-sm">
+                    <div className="w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0"
+                      style={{ background: `${r.color}18` }}>
+                      <Ic d={I.check} size={10} style={{ color: r.color }} />
+                    </div>
+                    <span className="text-gray-300">{f}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Key Features ────────────────────────────────────────────────────────── */
+function Features() {
+  const [active, setActive] = useState(0);
+  const tabs = [
+    {
+      tab: 'AI-Summary',
+      icon: I.spark,
+      color: '#fbbf24',
+      title: 'AI Chat Summary',
+      desc: 'AI analyzes hundreds of community messages and delivers a digest of what matters most in seconds. No information overload — only signal.',
+      bullets: ['Real-time discussion summarization', 'Smart notifications based on personal relevance', 'Event and offer recommendations'],
+      img: 'image%20(7).png',
+    },
+    {
+      tab: 'Verified Network',
+      icon: I.net,
+      color: '#2ABB6F',
+      title: 'Private Networking',
+      desc: 'Connect → Pending → Accepted: contact details are only revealed after mutual confirmation. The connection graph shows who knows whom inside the club.',
+      bullets: ['Data protected until mutual Accept', 'Search by role, skills, mutual contacts', 'D3 network visualization of the community'],
+      img: 'image%20(6).png',
+    },
+    {
+      tab: 'Digital ID',
+      icon: I.qr,
+      color: '#60a5fa',
+      title: 'Digital Membership ID',
+      desc: 'Apple Wallet card with a dynamic QR code and loyalty tiers. Offline verification at the door with a single scan.',
+      bullets: ['Apple Wallet integration', 'Dynamic QR — fresh code on every use', 'Tiers: Member / Premium / Platinum'],
+      img: 'image.png',
+    },
+  ];
+  const t = tabs[active];
+
+  return (
+    <section className="py-24 section-alt">
+      <div className="max-w-6xl mx-auto px-5">
+        <div className="text-center mb-10">
+          <div className="reveal badge badge-purple mb-4 mx-auto" style={{ display: 'inline-flex' }}>Technology</div>
+          <h2 className="section-title text-white reveal d1 mb-4">
+            Core <span className="grad-text">modules</span>
+          </h2>
+        </div>
+
+        <div className="reveal flex flex-wrap justify-center gap-2 mb-8">
+          {tabs.map((tb, i) => (
+            <button key={i} onClick={() => setActive(i)}
+              className="px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300"
+              style={{
+                background: active === i ? `${tb.color}1A` : 'rgba(255,255,255,.04)',
+                border: active === i ? `1px solid ${tb.color}45` : '1px solid rgba(255,255,255,.08)',
+                color: active === i ? tb.color : '#9ca3af',
+              }}>
+              {tb.tab}
+            </button>
+          ))}
+        </div>
+
+        <div className="glass rounded-2xl p-8 md:p-10" key={active}
+          style={{ border: `1px solid ${t.color}1A`, animation: 'fadeIn .35s ease' }}>
+          <div className="grid md:grid-cols-2 gap-10 items-center">
+            <div className="flex justify-center order-2 md:order-1">
+              <Phone src={t.img} alt={t.tab} width={220} />
+            </div>
+            <div className="order-1 md:order-2">
+              <div className="w-11 h-11 rounded-2xl flex items-center justify-center mb-5"
+                style={{ background: `${t.color}18`, border: `1px solid ${t.color}30` }}>
+                <Ic d={t.icon} size={22} style={{ color: t.color }} />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-3">{t.title}</h3>
+              <p className="text-gray-400 leading-relaxed mb-6">{t.desc}</p>
+              <ul className="space-y-3">
+                {t.bullets.map((b, j) => (
+                  <li key={j} className="flex items-center gap-3 text-sm">
+                    <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
+                      style={{ background: `${t.color}18` }}>
+                      <Ic d={I.check} size={11} style={{ color: t.color }} />
+                    </div>
+                    <span className="text-gray-300">{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Traction ────────────────────────────────────────────────────────────── */
+function Traction() {
+  return (
+    <section className="py-24" style={{
+      background: 'radial-gradient(ellipse 70% 55% at 15% 50%, rgba(42,187,111,.08) 0%, transparent 60%), rgba(9,14,10,.4)'
+    }}>
+      <div className="max-w-6xl mx-auto px-5">
+        <div className="text-center mb-12">
+          <div className="reveal badge badge-green mb-4 mx-auto" style={{ display: 'inline-flex' }}>Traction</div>
+          <h2 className="section-title text-white reveal d1 mb-4">
+            Already <span className="grad-text">in production</span>
+          </h2>
+          <p className="reveal d2 text-gray-400 max-w-lg mx-auto">
+            The platform successfully launched in a major financial hub — thousands of members, dozens of businesses, zero churn.
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-8 items-start">
+          <div className="reveal-left flex justify-center">
+            <div className="relative">
+              <div className="absolute opacity-35" style={{ right: -32, top: 32 }}>
+                <Phone src="image%20(5).png" alt="secondary" width={175} />
+              </div>
+              <div className="relative z-10">
+                <Phone src="image%20(2).png" alt="Community" width={230} />
+              </div>
+            </div>
+          </div>
+
+          <div className="reveal-right space-y-5">
+            {/* Metrics grid */}
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { n: '1,100+', l: 'Platform members', c: '#2ABB6F' },
+                { n: '42+',    l: 'Business partners', c: '#60a5fa' },
+                { n: '3',      l: 'Communities live', c: '#a78bfa' },
+                { n: '100%',   l: 'Pilot retention', c: '#fbbf24' },
+              ].map((m, i) => (
+                <div key={i} className="glass rounded-xl p-4 metric">
+                  <div style={{ fontSize: '1.75rem', fontWeight: 900, color: m.c, lineHeight: 1 }}>{m.n}</div>
+                  <div className="text-xs text-gray-500 mt-1.5">{m.l}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Value props */}
+            <div className="glass rounded-2xl p-5" style={{ borderColor: 'rgba(42,187,111,.18)' }}>
+              <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-3">Value for the organization</p>
+              {[
+                { l: 'Verification', v: 'Every member is checked — no unauthorized access', c: '#2ABB6F' },
+                { l: 'Auto-block', v: 'Expired cards are blocked automatically', c: '#2ABB6F' },
+                { l: 'Analytics', v: 'Real-time KPI dashboard', c: '#a78bfa' },
+                { l: 'Partners', v: 'Digital offer catalog instead of PDF', c: '#60a5fa' },
+              ].map((r, i) => (
+                <div key={i} className="flex justify-between items-center py-2.5"
+                  style={{ borderBottom: i < 3 ? '1px solid rgba(255,255,255,.05)' : 'none' }}>
+                  <span className="text-sm text-gray-500">{r.l}</span>
+                  <span className="text-sm font-medium text-right" style={{ color: r.c, maxWidth: '55%' }}>{r.v}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Timeline */}
+            <div className="glass rounded-2xl p-5">
+              <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-4">Roadmap</p>
+              <div className="space-y-3">
+                {[
+                  { q: 'Q1 2025', e: 'Pilot launch — 1,100+ members, live in production', done: true },
+                  { q: 'Q3 2025', e: 'Expanded to 3 communities', done: true },
+                  { q: 'Q1 2026', e: 'UAE market entry — 50,000+ potential members', done: false },
+                  { q: 'Q4 2026', e: 'MENA + USA — Series A', done: false },
+                ].map((t, i, arr) => (
+                  <div key={i} className="flex gap-3">
+                    <div className="flex flex-col items-center">
+                      <div className="tl-dot" style={{
+                        background: t.done ? '#2ABB6F' : '#374151',
+                        boxShadow: t.done ? '0 0 10px rgba(42,187,111,.6)' : 'none'
+                      }} />
+                      {i < arr.length - 1 && <div className="tl-line" />}
+                    </div>
+                    <div className="pb-2">
+                      <div className="text-xs text-gray-600 font-medium">{t.q}</div>
+                      <div className="text-sm text-gray-300">{t.e}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Commercial Model ────────────────────────────────────────────────────── */
+function Commercial() {
+  return (
+    <section className="py-24 section-alt">
+      <div className="max-w-6xl mx-auto px-5">
+        <div className="text-center mb-12">
+          <div className="reveal badge badge-amber mb-4 mx-auto" style={{ display: 'inline-flex' }}>Business Model</div>
+          <h2 className="section-title text-white reveal d1 mb-4">
+            SaaS with <span className="grad-text">predictable revenue</span>
+          </h2>
+          <p className="reveal d2 text-gray-400 max-w-lg mx-auto">
+            Simple two-tier model: one-time onboarding fee + recurring per-member subscription.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-5 mb-8">
+          {[
+            { icon: I.build, label: 'Setup Fee', value: '$2,500', sub: 'one-time', desc: 'Onboarding, community setup and team training. Paid once at launch.', color: '#a78bfa', badge: 'One-time' },
+            { icon: I.star, label: 'Annual Plan', value: '$170', sub: 'per member / year', desc: '30% discount vs monthly. The built-in incentive for renewals.', color: '#2ABB6F', badge: 'Popular' },
+            { icon: I.trend, label: 'Monthly Plan', value: '$20', sub: 'per member / month', desc: 'Flexible model for communities with a variable membership roster.', color: '#60a5fa', badge: 'Flexible' },
+          ].map((c, i) => (
+            <div key={i} className={`reveal d${i+1} glass rounded-2xl p-6 card-hover`}
+              style={{ borderColor: `${c.color}22` }}>
+              <div className="flex items-start justify-between mb-4">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+                  style={{ background: `${c.color}15` }}>
+                  <Ic d={c.icon} size={20} style={{ color: c.color }} />
+                </div>
+                <span className="badge" style={{ background: `${c.color}15`, color: c.color, border: `1px solid ${c.color}30` }}>{c.badge}</span>
+              </div>
+              <div style={{ fontSize: '2rem', fontWeight: 900, color: c.color, lineHeight: 1 }}>{c.value}</div>
+              <div className="text-xs text-gray-500 mb-3 mt-1">{c.sub}</div>
+              <p className="text-gray-400 text-sm leading-relaxed">{c.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Killer argument */}
+        <div className="reveal glass rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center gap-4"
+          style={{ borderColor: 'rgba(42,187,111,.25)', background: 'rgba(42,187,111,.05)' }}>
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+            style={{ background: 'rgba(42,187,111,.15)' }}>
+            <Ic d={I.lock} size={20} style={{ color: '#2ABB6F' }} />
+          </div>
+          <div>
+            <div className="text-white font-bold mb-1">Built-in retention mechanism</div>
+            <p className="text-gray-400 text-sm">
+              The system <span style={{ color: '#2ABB6F', fontWeight: 600 }}>automatically blocks expired membership cards</span> —
+              members are motivated to renew on their own to keep their perks.
+              Zero manual work required from the administrator.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Expansion ───────────────────────────────────────────────────────────── */
+function Expansion() {
+  const markets = [
+    { city: 'Astana', detail: 'Live', status: 'live', x: '68%', y: '35%', ping: 'ping' },
+    { city: 'Dubai',  detail: 'Q1 2026', status: 'next', x: '58%', y: '51%', ping: 'ping-2' },
+    { city: 'Doha',   detail: 'Q3 2026', status: 'plan', x: '60%', y: '56%', ping: 'ping-3' },
+    { city: 'New York', detail: 'Series A', status: 'plan', x: '22%', y: '38%', ping: 'ping-4' },
+  ];
+  const col = { live: '#2ABB6F', next: '#fbbf24', plan: '#60a5fa' };
+
+  return (
+    <section className="py-24">
+      <div className="max-w-6xl mx-auto px-5">
+        <div className="text-center mb-12">
+          <div className="reveal badge badge-blue mb-4 mx-auto" style={{ display: 'inline-flex' }}>
+            <Ic d={I.globe} size={11} /> Global Expansion
+          </div>
+          <h2 className="section-title text-white reveal d1 mb-4">
+            C. Asia → MENA → <span className="grad-text">The world</span>
+          </h2>
+          <p className="reveal d2 text-gray-400 max-w-lg mx-auto">
+            One product scales to any market: financial hubs, expat clubs, alumni networks.
+            TAM: 50,000+ organizations globally.
+          </p>
+        </div>
+
+        <div className="reveal glass rounded-2xl overflow-hidden mb-6" style={{ aspectRatio: '2/1', minHeight: 220, position: 'relative' }}>
+          <svg viewBox="0 0 1000 500" style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
+            <rect width="1000" height="500" fill="transparent" />
+            {/* Continents */}
+            {[
+              "M 80 60 L 200 50 L 240 80 L 230 160 L 200 200 L 150 210 L 100 170 L 80 140 Z",
+              "M 170 240 L 210 230 L 230 260 L 225 330 L 200 370 L 160 320 L 155 280 Z",
+              "M 440 55 L 520 50 L 540 70 L 530 110 L 490 130 L 460 120 L 440 100 Z",
+              "M 460 150 L 540 140 L 570 180 L 565 280 L 530 340 L 490 340 L 460 290 L 450 220 Z",
+              "M 540 50 L 700 45 L 800 60 L 820 120 L 780 170 L 720 180 L 660 160 L 600 150 L 565 120 L 545 90 Z",
+              "M 760 290 L 860 280 L 890 320 L 880 380 L 840 400 L 790 390 L 760 350 Z",
+            ].map((d, i) => <path key={i} d={d} fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.07)" strokeWidth="1" />)}
+            {/* Connection lines */}
+            <line x1="680" y1="175" x2="580" y2="255" stroke="rgba(42,187,111,.25)" strokeWidth="1" strokeDasharray="4 4" />
+            <line x1="590" y1="255" x2="600" y2="280" stroke="rgba(245,158,11,.2)" strokeWidth="1" strokeDasharray="4 4" />
+            <line x1="220" y1="190" x2="580" y2="255" stroke="rgba(59,130,246,.15)" strokeWidth="1" strokeDasharray="5 5" />
+            {markets.map((m, i) => {
+              const cx = parseFloat(m.x) * 10, cy = parseFloat(m.y) * 5;
+              return (
+                <g key={i}>
+                  <circle cx={cx} cy={cy} r="16" fill={col[m.status]} fillOpacity=".07" className={m.ping} />
+                  <circle cx={cx} cy={cy} r="6" fill={col[m.status]} fillOpacity=".9" />
+                  <circle cx={cx} cy={cy} r="3" fill="white" />
+                  <text x={cx+11} y={cy-7} fill={col[m.status]} fontSize="11" fontWeight="700" fontFamily="Inter">{m.city}</text>
+                  <text x={cx+11} y={cy+5} fill="rgba(255,255,255,.4)" fontSize="9" fontFamily="Inter">{m.detail}</text>
+                </g>
+              );
+            })}
+          </svg>
+        </div>
+
+        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            { flag: '🇰🇿', market: 'Kazakhstan', tam: '1,200+ clubs', status: 'live', detail: 'Financial hubs, business clubs' },
+            { flag: '🇦🇪', market: 'UAE', tam: '300K+ members', status: 'next', detail: 'Free Zone, Expat Clubs' },
+            { flag: '🇶🇦', market: 'Qatar', tam: '200K+ residents', status: 'plan', detail: 'Professional hubs' },
+            { flag: '🇺🇸', market: 'USA', tam: 'Global market', status: 'plan', detail: 'Co-working, Alumni Networks' },
+          ].map((m, i) => (
+            <div key={i} className={`reveal d${i+1} glass rounded-xl p-4 card-hover`}
+              style={{ borderColor: `${col[m.status]}22` }}>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-xl">{m.flag}</span>
+                <span className="badge" style={{ background: `${col[m.status]}15`, color: col[m.status], border: `1px solid ${col[m.status]}28`, fontSize: 9 }}>
+                  { {live:'Live',next:'Next',plan:'Planned'}[m.status] }
+                </span>
+              </div>
+              <div className="font-bold text-white text-sm mb-0.5">{m.market}</div>
+              <div className="text-xs text-gray-500 mb-0.5">{m.tam}</div>
+              <div className="text-xs text-gray-600">{m.detail}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Why Now ─────────────────────────────────────────────────────────────── */
+function WhyNow() {
+  const pts = [
+    { icon: I.spark,  color: '#fbbf24', title: 'AI moment', desc: 'The LLM stack has matured to production-quality summarization. Early movers are building the moat right now.' },
+    { icon: I.globe,  color: '#2ABB6F', title: 'Global template', desc: 'The platform architecture is market-agnostic — one product deploys to any country in days.' },
+    { icon: I.users,  color: '#60a5fa', title: 'Network effect', desc: 'Every new member increases the platform value for everyone else. The competitive barrier grows automatically.' },
+    { icon: I.trend,  color: '#a78bfa', title: 'Greenfield market', desc: 'No global leader in community SaaS. The "Jira for clubs" does not exist yet — we are building it.' },
+  ];
+  return (
+    <section className="py-24 section-alt">
+      <div className="max-w-6xl mx-auto px-5">
+        <div className="text-center mb-12">
+          <div className="reveal badge badge-amber mb-4 mx-auto" style={{ display: 'inline-flex' }}>Why now</div>
+          <h2 className="section-title text-white reveal d1 mb-4">
+            The window of opportunity <span className="grad-text">is open</span>
+          </h2>
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {pts.map((p, i) => (
+            <div key={i} className={`reveal d${i+1} glass rounded-2xl p-5 card-hover`}
+              style={{ borderColor: `${p.color}1A` }}>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
+                style={{ background: `${p.color}15` }}>
+                <Ic d={p.icon} size={20} style={{ color: p.color }} />
+              </div>
+              <h3 className="font-bold text-white mb-2">{p.title}</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">{p.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+function Footer() {
+  return (
+    <footer className="py-24 relative overflow-hidden">
+      <div style={{
+        position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
+        width: 500, height: 250,
+        background: 'radial-gradient(ellipse, rgba(42,187,111,.1) 0%, transparent 70%)',
+        pointerEvents: 'none',
+      }} />
+      <div className="max-w-2xl mx-auto px-5 text-center relative z-10">
+        <div className="reveal mb-6"><Logo size={46} /></div>
+        <h2 className="section-title text-white reveal d1 mb-4 leading-tight">
+          Invest in the<br />
+          <span className="grad-text">operating system for communities</span>
+        </h2>
+        <p className="reveal d2 text-gray-400 text-lg mb-10 max-w-md mx-auto">
+          Sagi is the infrastructure every professional club in the world has been missing.
+          Already in production. Next step — global scale.
+        </p>
+        <div className="reveal d3">
+          <a href="mailto:info@sagi.kz"
+            className="grad-btn text-white font-bold px-8 py-4 rounded-2xl inline-flex items-center gap-2.5 text-base">
+            <Ic d={I.mail} size={18} />
+            Contact the Team
+          </a>
+        </div>
+        <div className="hr mt-12 mb-6" />
+        <p className="text-xs text-gray-700">© 2025 Sagi Technologies · info@sagi.kz</p>
+      </div>
+    </footer>
+  );
+}
+
+/* ── Marketplace Demo ───────────────────────────────────────────────────── */
+const BUSINESSES = [
+  { id:1, name:'Chez Georges', cat:'Restaurant', disc:'10% off entire menu', tag:'Exclusive', color:'#f59e0b',
+    photo:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80',
+    desc:'Exquisite French cuisine in the heart of the city. 10% off all menu items for club members.' },
+  { id:2, name:'Rafe Beauty', cat:'Beauty', disc:'15% off services', tag:'', color:'#ec4899',
+    photo:'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=80',
+    desc:'Premium beauty studio. 15% off all treatments when you present your QR membership card.' },
+  { id:3, name:'Ana Flowers', cat:'Floristry', disc:'10% off bouquets', tag:'', color:'#10b981',
+    photo:'https://images.unsplash.com/photo-1487530811015-780708a5ecf2?w=400&q=80',
+    desc:'Bespoke bouquets and floral arrangements. 10% discount for community members.' },
+  { id:4, name:'Master Coffee', cat:'Coffee Shop', disc:'20% off drinks', tag:'Exclusive', color:'#92400e',
+    photo:'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&q=80',
+    desc:'Specialty coffee and artisan pastries. 20% off all beverages with your Sagi card.' },
+  { id:5, name:'Bronx Fitness', cat:'Fitness', disc:'30% off membership', tag:'', color:'#3b82f6',
+    photo:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80',
+    desc:'Modern fitness club with gym, pool, and group classes — all in one membership.' },
+  { id:6, name:'Vertex Academy', cat:'Education', disc:'25% off courses', tag:'Exclusive', color:'#8b5cf6',
+    photo:'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&q=80',
+    desc:'Professional courses and training programs for career growth. 25% off for club members.' },
+];
+
+function BusinessModal({ biz, onClose, onRequest }) {
+  const [status, setStatus] = useState('idle'); // idle | pending | accepted
+
+  function handleRequest() {
+    setStatus('pending');
+    setTimeout(() => setStatus('accepted'), 1800);
+    onRequest && onRequest();
+  }
+
+  return (
+    <div style={{
+      position: 'fixed', inset: 0, zIndex: 200,
+      background: 'rgba(0,0,0,.75)', backdropFilter: 'blur(8px)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem',
+      animation: 'fadeIn .2s ease',
+    }} onClick={onClose}>
+      <div style={{
+        background: '#111814', border: '1px solid rgba(255,255,255,.1)',
+        borderRadius: 24, width: '100%', maxWidth: 380, overflow: 'hidden',
+        animation: 'slideUp .25s ease',
+      }} onClick={e => e.stopPropagation()}>
+
+        {/* Photo */}
+        <div style={{ position: 'relative', height: 200 }}>
+          <img src={biz.photo} alt={biz.name}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: 'linear-gradient(to top, rgba(10,14,10,.9) 0%, transparent 60%)',
+          }} />
+          {biz.tag && (
+            <div style={{
+              position: 'absolute', top: 12, right: 12,
+              background: 'rgba(245,158,11,.9)', color: '#fff',
+              fontSize: 10, fontWeight: 700, padding: '3px 10px',
+              borderRadius: 100, textTransform: 'uppercase', letterSpacing: '.05em',
+            }}>{biz.tag}</div>
+          )}
+          <button onClick={onClose} style={{
+            position: 'absolute', top: 12, left: 12, width: 32, height: 32,
+            borderRadius: '50%', background: 'rgba(0,0,0,.5)', border: '1px solid rgba(255,255,255,.2)',
+            color: '#fff', fontSize: 18, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>×</button>
+          <div style={{ position: 'absolute', bottom: 14, left: 16 }}>
+            <div style={{ fontWeight: 800, fontSize: '1.2rem', color: '#fff' }}>{biz.name}</div>
+            <div style={{ fontSize: 13, color: 'rgba(255,255,255,.6)' }}>{biz.cat}</div>
+          </div>
+        </div>
+
+        {/* Body */}
+        <div style={{ padding: '20px 20px 24px' }}>
+          {/* Discount badge */}
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6,
+            background: `${biz.color}18`, border: `1px solid ${biz.color}35`,
+            color: biz.color, borderRadius: 100,
+            padding: '5px 14px', fontSize: 13, fontWeight: 700, marginBottom: 14,
+          }}>
+            <span style={{ fontSize: 16 }}>🎁</span> {biz.disc}
+          </div>
+
+          <p style={{ color: '#9ca3af', fontSize: 14, lineHeight: 1.6, marginBottom: 20 }}>
+            {biz.desc}
+          </p>
+
+          {/* Status flow */}
+          {status === 'accepted' ? (
+            <div style={{
+              background: 'rgba(42,187,111,.12)', border: '1px solid rgba(42,187,111,.3)',
+              borderRadius: 14, padding: '14px 18px', textAlign: 'center',
+            }}>
+              <div style={{ fontSize: 22, marginBottom: 4 }}>✅</div>
+              <div style={{ color: '#2ABB6F', fontWeight: 700, fontSize: 15 }}>Request sent!</div>
+              <div style={{ color: '#6b7280', fontSize: 13, marginTop: 4 }}>The administrator will review and confirm</div>
+            </div>
+          ) : status === 'pending' ? (
+            <div style={{
+              background: 'rgba(245,158,11,.1)', border: '1px solid rgba(245,158,11,.3)',
+              borderRadius: 14, padding: '14px 18px', textAlign: 'center',
+            }}>
+              <div style={{ color: '#fbbf24', fontWeight: 700, fontSize: 15 }}>⏳ Pending...</div>
+              <div style={{ color: '#6b7280', fontSize: 13, marginTop: 4 }}>Sending request to administrator</div>
+            </div>
+          ) : (
+            <button onClick={handleRequest} style={{
+              width: '100%', padding: '14px', borderRadius: 14,
+              background: 'linear-gradient(135deg, #2ABB6F, #1E9E5A)',
+              color: '#fff', fontWeight: 700, fontSize: 15,
+              border: 'none', cursor: 'pointer', transition: 'all .2s ease',
+            }}
+            onMouseEnter={e => e.target.style.opacity = '.9'}
+            onMouseLeave={e => e.target.style.opacity = '1'}>
+              Request to Join →
+            </button>
+          )}
+
+          <p style={{ color: '#4b5563', fontSize: 12, textAlign: 'center', marginTop: 12 }}>
+            The community administrator will receive your request
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Marketplace() {
+  const [selected, setSelected] = useState(null);
+
+  return (
+    <section className="py-24">
+      <div className="max-w-6xl mx-auto px-5">
+        <div className="text-center mb-12">
+          <div className="reveal badge badge-amber mb-4 mx-auto" style={{ display: 'inline-flex' }}>
+            Live Demo
+          </div>
+          <h2 className="section-title text-white reveal d1 mb-4">
+            Partner <span className="grad-text">Catalog</span>
+          </h2>
+          <p className="reveal d2 text-gray-400 max-w-lg mx-auto">
+            Members see exclusive offers from verified businesses.
+            Click a card to experience it as a member.
+          </p>
+        </div>
+
+        <div className="reveal grid grid-cols-2 md:grid-cols-3 gap-4">
+          {BUSINESSES.map((b, i) => (
+            <div key={b.id}
+              onClick={() => setSelected(b)}
+              className="card-hover"
+              style={{
+                borderRadius: 18, overflow: 'hidden', cursor: 'pointer',
+                border: '1px solid rgba(255,255,255,.07)',
+                background: '#0f1410',
+                transition: 'all .25s ease',
+              }}>
+              {/* Photo */}
+              <div style={{ position: 'relative', aspectRatio: '4/3' }}>
+                <img src={b.photo} alt={b.name}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                {b.tag && (
+                  <div style={{
+                    position: 'absolute', top: 8, right: 8,
+                    background: 'rgba(245,158,11,.95)', color: '#fff',
+                    fontSize: 9, fontWeight: 700, padding: '2px 8px',
+                    borderRadius: 100, textTransform: 'uppercase',
+                  }}>{b.tag}</div>
+                )}
+                <div style={{
+                  position: 'absolute', inset: 0,
+                  background: 'linear-gradient(to top, rgba(8,12,10,.7) 0%, transparent 50%)',
+                }} />
+              </div>
+              {/* Info */}
+              <div style={{ padding: '12px 14px 14px' }}>
+                <div style={{ fontWeight: 700, color: '#f9fafb', fontSize: 14, marginBottom: 4 }}>{b.name}</div>
+                <div style={{ color: b.color, fontWeight: 700, fontSize: 15 }}>{b.disc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <p className="reveal text-center text-xs text-gray-700 mt-6">
+          Click any card to experience the member view
+        </p>
+      </div>
+
+      {selected && (
+        <BusinessModal
+          biz={selected}
+          onClose={() => setSelected(null)}
+        />
+      )}
+    </section>
+  );
+}
+
+/* ── App ─────────────────────────────────────────────────────────────────── */
+function App() {
+  useReveal();
+  return (
+    <div>
+      <Header />
+      <Hero />
+      <div className="hr" /><Problem />
+      <div className="hr" /><Roles />
+      <div className="hr" /><Marketplace />
+      <div className="hr" /><Features />
+      <div className="hr" /><Traction />
+      <div className="hr" /><Commercial />
+      <div className="hr" /><Expansion />
+      <div className="hr" /><WhyNow />
+      <div className="hr" /><Footer />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

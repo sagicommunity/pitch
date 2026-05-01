@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sagi — Investor Pitch Deck</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green: #2ABB6F;
+      --green-dark: #1E9E5A;
+      --green-light: #4DCF8A;
+      --purple: #8b5cf6;
+      --blue: #3b82f6;
+      --amber: #f59e0b;
+    }
+
+    .reveal, .reveal * { font-family: 'Inter', sans-serif !important; box-sizing: border-box; }
+
+    .reveal .slides section { height: 100%; }
+
+    /* ── Base ── */
+    .reveal { background: #080c0a; }
+    .reveal .slide-background { background: #080c0a; }
+
+    /* ── Gradient text ── */
+    .grad { background: linear-gradient(135deg, #4DCF8A, #2ABB6F, #1E9E5A); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    /* ── Glass cards ── */
+    .glass {
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 20px;
+      padding: 24px;
+    }
+    .glass-sm { border-radius: 14px; padding: 16px; }
+
+    /* ── Badge ── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 12px; border-radius: 100px;
+      font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+    }
+    .badge-green  { background: rgba(42,187,111,.12); color: #2ABB6F; border: 1px solid rgba(42,187,111,.3); }
+    .badge-purple { background: rgba(139,92,246,.12); color: #a78bfa; border: 1px solid rgba(139,92,246,.3); }
+    .badge-blue   { background: rgba(59,130,246,.12);  color: #60a5fa; border: 1px solid rgba(59,130,246,.3); }
+    .badge-amber  { background: rgba(245,158,11,.12);  color: #fbbf24; border: 1px solid rgba(245,158,11,.3); }
+
+    /* ── Slide layouts ── */
+    .slide-inner {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 48px 64px;
+      text-align: left;
+    }
+    .slide-inner.center { align-items: center; text-align: center; }
+
+    /* ── Typography ── */
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Inter', sans-serif !important;
+      letter-spacing: -.03em; line-height: 1.08;
+      text-transform: none; color: #fff; margin: 0;
+    }
+    .reveal h1 { font-size: 3.6rem; font-weight: 900; }
+    .reveal h2 { font-size: 2.6rem; font-weight: 800; }
+    .reveal h3 { font-size: 1.25rem; font-weight: 700; }
+    .reveal p  { color: #9ca3af; font-size: 1rem; line-height: 1.65; margin: 0; }
+
+    /* ── Grid helpers ── */
+    .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    .g4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+
+    /* ── Metric box ── */
+    .metric-box { text-align: center; }
+    .metric-val { font-size: 2.4rem; font-weight: 900; line-height: 1; }
+    .metric-lbl { font-size: 0.7rem; color: #6b7280; margin-top: 6px; }
+
+    /* ── Check list ── */
+    .checklist { list-style: none; margin: 0; padding: 0; }
+    .checklist li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.82rem; color: #d1d5db; margin-bottom: 10px;
+    }
+    .checklist li::before {
+      content: '✓'; font-weight: 800; font-size: 11px;
+      min-width: 18px; height: 18px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(42,187,111,.15); color: #2ABB6F; flex-shrink: 0;
+    }
+
+    /* ── Reveal.js overrides ── */
+    .reveal .progress { background: rgba(255,255,255,.05); }
+    .reveal .progress span { background: #2ABB6F; }
+    .reveal .controls button { color: #2ABB6F; }
+    .reveal .slide-number { color: #374151; font-size: 12px; }
+
+    /* ── Animations ── */
+    .reveal .slides section .fragment.fade-up {
+      transform: translateY(20px);
+    }
+
+    /* ── Card with colored left border ── */
+    .border-card {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 14px;
+      padding: 16px 18px;
+    }
+
+    /* ── Timeline ── */
+    .tl { display: flex; flex-direction: column; gap: 12px; }
+    .tl-row { display: flex; align-items: flex-start; gap: 12px; }
+    .tl-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+    .tl-q { font-size: 0.7rem; color: #6b7280; font-weight: 600; }
+    .tl-e { font-size: 0.8rem; color: #d1d5db; }
+
+    /* ── Cover hero bg ── */
+    .cover-bg {
+      background:
+        radial-gradient(ellipse 90% 55% at 50% 0%, rgba(42,187,111,.16) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 92% 40%, rgba(139,92,246,.08) 0%, transparent 55%),
+        #080c0a;
+    }
+
+    /* ── Section BG alternates ── */
+    .bg-alt { background: rgba(255,255,255,.018); }
+    .bg-traction {
+      background: radial-gradient(ellipse 65% 55% at 15% 50%, rgba(42,187,111,.09) 0%, transparent 60%), #080c0a;
+    }
+
+    /* ── Logo mark ── */
+    .logo-row { display: flex; align-items: center; gap: 10px; }
+    .logo-row img { width: 36px; height: 36px; border-radius: 9px; object-fit: contain; }
+    .logo-row span { font-size: 1.4rem; font-weight: 900; letter-spacing: -.02em;
+      background: linear-gradient(135deg, #4DCF8A, #2ABB6F); -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; background-clip: text; }
+
+    /* ── Slide number override ── */
+    .reveal .slide-number-a { color: #374151 !important; }
+
+    /* ── Pill tag ── */
+    .pill {
+      display: inline-block; padding: 3px 10px; border-radius: 100px;
+      font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    }
+
+    /* ── Divider line ── */
+    .hr { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.07), transparent); margin: 24px 0; }
+  </style>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- ═══════════════════════════════════════════════════════════ SLIDE 1 · COVER -->
+<section class="cover-bg" data-transition="fade">
+  <div class="slide-inner center">
+    <div class="logo-row" style="margin-bottom:28px;justify-content:center;">
+      <img src="image%20(3).png" alt="Sagi" />
+      <span>Sagi</span>
+    </div>
+
+    <div style="margin-bottom:16px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+      <span class="badge badge-green">iOS · Android · Web</span>
+      <span class="badge badge-purple">SaaS B2B</span>
+    </div>
+
+    <h1 style="margin-bottom:20px;">
+      Manage communities.<br>
+      <span class="grad">Scale the value.</span>
+    </h1>
+
+    <p style="max-width:560px;font-size:1.05rem;margin:0 auto 32px;">
+      Platform for business clubs, professional associations and interest-based communities.
+      Member verification, AI analytics and digital membership cards — all in one product.
+    </p>
+
+    <div style="display:flex;gap:40px;justify-content:center;flex-wrap:wrap;">
+      <div class="metric-box">
+        <div class="metric-val" style="color:#2ABB6F;">1,100+</div>
+        <div class="metric-lbl">Active members</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-val" style="color:#a78bfa;">3</div>
+        <div class="metric-lbl">Communities live</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-val" style="color:#fbbf24;">100%</div>
+        <div class="metric-lbl">Pilot retention</div>
+      </div>
+    </div>
+
+    <div class="hr" style="max-width:480px;margin:32px auto 16px;"></div>
+    <p style="font-size:0.7rem;color:#374151;letter-spacing:.08em;text-transform:uppercase;">
+      Built for · Business Clubs · Financial Hubs · Alumni Networks · Co-working · Professional Guilds
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ SLIDE 2 · PROBLEM -->
+<section class="bg-alt" data-transition="fade">
+  <div class="slide-inner">
+    <div style="margin-bottom:20px;">
+      <span class="badge badge-amber">Problem</span>
+    </div>
+    <h2 style="margin-bottom:8px;">Market <span class="grad">chaos</span></h2>
+    <p style="margin-bottom:28px;">Professional clubs are run on 2005-era tools. Members, organizers and partners lose opportunities every day.</p>
+
+    <div class="g3">
+      <!-- Card 1 -->
+      <div class="glass glass-sm" style="border-color:rgba(245,158,11,.2);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div style="width:38px;height:38px;border-radius:10px;background:rgba(245,158,11,.1);display:flex;align-items:center;justify-content:center;font-size:18px;">💬</div>
+          <span class="badge badge-amber">Noise</span>
+        </div>
+        <h3 style="color:#fff;margin-bottom:8px;font-size:1rem;">Chat chaos</h3>
+        <p style="font-size:0.75rem;margin-bottom:14px;">500+ messages per day. Important announcements and partner offers drown in the noise.</p>
+        <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;">
+          <span style="font-weight:900;font-size:1.4rem;color:#fbbf24;">500+</span>
+          <span style="font-size:0.7rem;color:#6b7280;">messages / day</span>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="glass glass-sm" style="border-color:rgba(42,187,111,.2);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div style="width:38px;height:38px;border-radius:10px;background:rgba(42,187,111,.1);display:flex;align-items:center;justify-content:center;font-size:18px;">🛡️</div>
+          <span class="badge badge-green">Trust Gap</span>
+        </div>
+        <h3 style="color:#fff;margin-bottom:8px;font-size:1rem;">Zero verification</h3>
+        <p style="font-size:0.75rem;margin-bottom:14px;">No one checks membership. Fraud, spam and data leaks are the norm for most professional clubs.</p>
+        <div style="background:rgba(42,187,111,.08);border:1px solid rgba(42,187,111,.2);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;">
+          <span style="font-weight:900;font-size:1.4rem;color:#2ABB6F;">0%</span>
+          <span style="font-size:0.7rem;color:#6b7280;">verification in chats</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="glass glass-sm" style="border-color:rgba(59,130,246,.2);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div style="width:38px;height:38px;border-radius:10px;background:rgba(59,130,246,.1);display:flex;align-items:center;justify-content:center;font-size:18px;">📄</div>
+          <span class="badge badge-blue">Analog Tools</span>
+        </div>
+        <h3 style="color:#fff;margin-bottom:8px;font-size:1rem;">PDFs &amp; spreadsheets</h3>
+        <p style="font-size:0.75rem;margin-bottom:14px;">Partner directories in PDF, manual renewals, no analytics. Clubs lose up to 40% of renewals.</p>
+        <div style="background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;">
+          <span style="font-weight:900;font-size:1.4rem;color:#60a5fa;">−40%</span>
+          <span style="font-size:0.7rem;color:#6b7280;">renewals without a system</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ SLIDE 3 · SOLUTION -->
+<section data-transition="fade">
+  <div class="slide-inner">
+    <div style="margin-bottom:20px;">
+      <span class="badge badge-green">Product</span>
+    </div>
+    <h2 style="margin-bottom:8px;">Three roles — <span class="grad">one ecosystem</span></h2>
+    <p style="margin-bottom:28px;">Each role amplifies the value of the others. More members means more offers. More businesses means better perks.</p>
+
+    <div class="g3">
+      <!-- Admin -->
+      <div class="glass glass-sm" style="border-color:rgba(139,92,246,.25);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <div style="width:36px;height:36px;border-radius:10px;background:rgba(139,92,246,.15);display:flex;align-items:center;justify-content:center;font-size:16px;">🏛️</div>
+          <span style="font-weight:700;color:#fff;font-size:0.95rem;">Administrator</span>
+        </div>
+        <ul class="checklist" style="--chk:#8b5cf6;">
+          <li style="--c:#8b5cf6;">Member verification</li>
+          <li>Real-time analytics</li>
+          <li>Membership expiry control</li>
+          <li>Partner network management</li>
+        </ul>
+      </div>
+      <style>.checklist li:nth-child(1)::before{}</style>
+
+      <!-- Member -->
+      <div class="glass glass-sm" style="border-color:rgba(42,187,111,.25);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <div style="width:36px;height:36px;border-radius:10px;background:rgba(42,187,111,.15);display:flex;align-items:center;justify-content:center;font-size:16px;">💳</div>
+          <span style="font-weight:700;color:#fff;font-size:0.95rem;">Member</span>
+        </div>
+        <ul class="checklist">
+          <li>Apple Wallet card + QR ID</li>
+          <li>Exclusive discounts &amp; offers</li>
+          <li>Events &amp; news feed</li>
+          <li>Verified Networking</li>
+        </ul>
+      </div>
+
+      <!-- Business -->
+      <div class="glass glass-sm" style="border-color:rgba(59,130,246,.25);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <div style="width:36px;height:36px;border-radius:10px;background:rgba(59,130,246,.15);display:flex;align-items:center;justify-content:center;font-size:16px;">🏪</div>
+          <span style="font-weight:700;color:#fff;font-size:0.95rem;">Business Partner</span>
+        </div>
+        <ul class="checklist">
+          <li>QR card scanning</li>
+          <li>Offer management</li>
+          <li>Visit statistics</li>
+          <li>Dedicated Sagi manager</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Network effect callout -->
+    <div style="margin-top:18px;background:rgba(42,187,111,.05);border:1px solid rgba(42,187,111,.2);border-radius:14px;padding:14px 20px;display:flex;align-items:center;gap:14px;">
+      <div style="font-size:20px;">🔗</div>
+      <p style="font-size:0.8rem;color:#d1d5db;margin:0;">
+        <span style="color:#2ABB6F;font-weight:700;">Network effect:</span>
+        every new member increases value for all other participants — members, partners and the organization.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ SLIDE 4 · TECHNOLOGY -->
+<section class="bg-alt" data-transition="fade">
+  <div class="slide-inner">
+    <div style="margin-bottom:20px;">
+      <span class="badge badge-purple">Technology</span>
+    </div>
+    <h2 style="margin-bottom:28px;">Core <span class="grad">modules</span></h2>
+
+    <div class="g3" style="align-items:start;">
+      <!-- AI Summary -->
+      <div class="glass glass-sm" style="border-color:rgba(245,158,11,.2);">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px;">✨</div>
+        <h3 style="color:#fff;font-size:1rem;margin-bottom:8px;">AI-Summary</h3>
+        <p style="font-size:0.75rem;margin-bottom:12px;">AI analyzes hundreds of messages and delivers a digest of what matters most in seconds.</p>
+        <ul class="checklist" style="font-size:0.75rem;">
+          <li>Real-time summarization</li>
+          <li>Smart personal notifications</li>
+          <li>Event &amp; offer recommendations</li>
+        </ul>
+      </div>
+
+      <!-- Verified Network -->
+      <div class="glass glass-sm" style="border-color:rgba(42,187,111,.2);">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(42,187,111,.12);border:1px solid rgba(42,187,111,.25);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px;">🕸️</div>
+        <h3 style="color:#fff;font-size:1rem;margin-bottom:8px;">Verified Network</h3>
+        <p style="font-size:0.75rem;margin-bottom:12px;">Connect → Pending → Accepted: contact details only revealed after mutual confirmation.</p>
+        <ul class="checklist" style="font-size:0.75rem;">
+          <li>Data protected until mutual Accept</li>
+          <li>Search by role, skills, contacts</li>
+          <li>D3 network visualization</li>
+        </ul>
+      </div>
+
+      <!-- Digital ID -->
+      <div class="glass glass-sm" style="border-color:rgba(59,130,246,.2);">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.25);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px;">📱</div>
+        <h3 style="color:#fff;font-size:1rem;margin-bottom:8px;">Digital Membership ID</h3>
+        <p style="font-size:0.75rem;margin-bottom:12px;">Apple Wallet card with dynamic QR. Offline verification at the door with a single scan.</p>
+        <ul class="checklist" style="font-size:0.75rem;">
+          <li>Apple Wallet integration</li>
+          <li>Dynamic QR — fresh on every use</li>
+          <li>Tiers: Member / Premium / Platinum</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ SLIDE 5 · TRACTION -->
+<section class="bg-traction" data-transition="fade">
+  <div class="slide-inner">
+    <div style="margin-bottom:20px;">
+      <span class="badge badge-green">Traction</span>
+    </div>
+    <h2 style="margin-bottom:8px;">Already <span class="grad">in production</span></h2>
+    <p style="margin-bottom:24px;">Successfully launched in a major financial hub — thousands of members, dozens of businesses, zero churn.</p>
+
+    <div class="g2" style="align-items:start;gap:20px;">
+      <!-- Left: metrics + value props -->
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="g2" style="gap:12px;">
+          <div class="glass glass-sm metric-box">
+            <div class="metric-val" style="color:#2ABB6F;font-size:2rem;">1,100+</div>
+            <div class="metric-lbl">Platform members</div>
+          </div>
+          <div class="glass glass-sm metric-box">
+            <div class="metric-val" style="color:#60a5fa;font-size:2rem;">42+</div>
+            <div class="metric-lbl">Business partners</div>
+          </div>
+          <div class="glass glass-sm metric-box">
+            <div class="metric-val" style="color:#a78bfa;font-size:2rem;">3</div>
+            <div class="metric-lbl">Communities live</div>
+          </div>
+          <div class="glass glass-sm metric-box">
+            <div class="metric-val" style="color:#fbbf24;font-size:2rem;">100%</div>
+            <div class="metric-lbl">Pilot retention</div>
+          </div>
+        </div>
+
+        <div class="glass glass-sm" style="border-color:rgba(42,187,111,.18);">
+          <p style="font-size:0.65rem;font-weight:700;color:#4b5563;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;">Value for the organization</p>
+          <div style="display:flex;flex-direction:column;gap:0;">
+            <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+              <span style="font-size:0.75rem;color:#6b7280;">Verification</span>
+              <span style="font-size:0.75rem;color:#2ABB6F;font-weight:600;max-width:55%;text-align:right;">Every member is checked</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+              <span style="font-size:0.75rem;color:#6b7280;">Auto-block</span>
+              <span style="font-size:0.75rem;color:#2ABB6F;font-weight:600;max-width:55%;text-align:right;">Expired cards blocked automatically</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+              <span style="font-size:0.75rem;color:#6b7280;">Analytics</span>
+              <span style="font-size:0.75rem;color:#a78bfa;font-weight:600;">Real-time KPI dashboard</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:7px 0;">
+              <span style="font-size:0.75rem;color:#6b7280;">Partners</span>
+              <span style="font-size:0.75rem;color:#60a5fa;font-weight:600;">Digital catalog, not PDF</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: roadmap -->
+      <div class="glass" style="padding:20px;">
+        <p style="font-size:0.65rem;font-weight:700;color:#4b5563;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;">Roadmap</p>
+        <div class="tl">
+          <div class="tl-row">
+            <div class="tl-dot" style="background:#2ABB6F;box-shadow:0 0 10px rgba(42,187,111,.6);"></div>
+            <div>
+              <div class="tl-q">Q1 2025 ✓ Done</div>
+              <div class="tl-e">Pilot launch — 1,100+ members, live in production</div>
+            </div>
+          </div>
+          <div class="tl-row">
+            <div class="tl-dot" style="background:#2ABB6F;box-shadow:0 0 10px rgba(42,187,111,.6);"></div>
+            <div>
+              <div class="tl-q">Q3 2025 ✓ Done</div>
+              <div class="tl-e">Expanded to 3 communities</div>
+            </div>
+          </div>
+          <div class="tl-row">
+            <div class="tl-dot" style="background:#374151;"></div>
+            <div>
+              <div class="tl-q">Q1 2026</div>
+              <div class="tl-e">UAE market entry — 50,000+ potential members</div>
+            </div>
+          </div>
+          <div class="tl-row">
+            <div class="tl-dot" style="background:#374151;"></div>
+            <div>
+              <div class="tl-q">Q4 2026</div>
+              <div class="tl-e">MENA + USA — Series A</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ SLIDE 6 · BUSINESS MODEL -->
+<section class="bg-alt" data-transition="fade">
+  <div class="slide-inner">
+    <div style="margin-bottom:20px;">
+      <span class="badge badge-amber">Business Model</span>
+    </div>
+    <h2 style="margin-bottom:8px;">SaaS with <span class="grad">predictable revenue</span></h2>
+    <p style="margin-bottom:28px;">Simple two-tier model: one-time onboarding fee + recurring per-member subscription.</p>
+
+    <div class="g3" style="margin-bottom:18px;">
+      <!-- Setup -->
+      <div class="glass glass-sm" style="border-color:rgba(139,92,246,.2);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div style="width:38px;height:38px;border-radius:10px;background:rgba(139,92,246,.12);display:flex;align-items:center;justify-content:center;font-size:16px;">🏗️</div>
+          <span class="badge badge-purple">One-time</span>
+        </div>
+        <div style="font-size:2.2rem;font-weight:900;color:#a78bfa;line-height:1;">$2,500</div>
+        <div style="font-size:0.7rem;color:#6b7280;margin:4px 0 10px;">setup fee</div>
+        <p style="font-size:0.75rem;color:#9ca3af;">Onboarding, community setup and team training. Paid once at launch.</p>
+      </div>
+
+      <!-- Annual -->
+      <div class="glass glass-sm" style="border-color:rgba(42,187,111,.3);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div style="width:38px;height:38px;border-radius:10px;background:rgba(42,187,111,.12);display:flex;align-items:center;justify-content:center;font-size:16px;">⭐</div>
+          <span class="badge badge-green">Popular</span>
+        </div>
+        <div style="font-size:2.2rem;font-weight:900;color:#2ABB6F;line-height:1;">$170</div>
+        <div style="font-size:0.7rem;color:#6b7280;margin:4px 0 10px;">per member / year</div>
+        <p style="font-size:0.75rem;color:#9ca3af;">30% discount vs monthly. Built-in incentive for renewals.</p>
+      </div>
+
+      <!-- Monthly -->
+      <div class="glass glass-sm" style="border-color:rgba(59,130,246,.2);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div style="width:38px;height:38px;border-radius:10px;background:rgba(59,130,246,.12);display:flex;align-items:center;justify-content:center;font-size:16px;">📅</div>
+          <span class="badge badge-blue">Flexible</span>
+        </div>
+        <div style="font-size:2.2rem;font-weight:900;color:#60a5fa;line-height:1;">$20</div>
+        <div style="font-size:0.7rem;color:#6b7280;margin:4px 0 10px;">per member / month</div>
+        <p style="font-size:0.75rem;color:#9ca3af;">Flexible model for communities with variable membership rosters.</p>
+      </div>
+    </div>
+
+    <!-- Killer argument -->
+    <div style="background:rgba(42,187,111,.05);border:1px solid rgba(42,187,111,.25);border-radius:14px;padding:14px 20px;display:flex;align-items:center;gap:14px;">
+      <div style="font-size:20px;">🔒</div>
+      <p style="font-size:0.82rem;color:#d1d5db;margin:0;">
+        <span style="color:#2ABB6F;font-weight:700;">Built-in retention mechanism:</span>
+        the system automatically blocks expired cards — members renew on their own to keep their perks.
+        Zero manual work for the administrator.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ SLIDE 7 · EXPANSION -->
+<section data-transition="fade">
+  <div class="slide-inner">
+    <div style="margin-bottom:20px;">
+      <span class="badge badge-blue">🌐 Global Expansion</span>
+    </div>
+    <h2 style="margin-bottom:8px;">C.Asia → MENA → <span class="grad">The world</span></h2>
+    <p style="margin-bottom:24px;">One product scales to any market: financial hubs, expat clubs, alumni networks. TAM: 50,000+ organizations globally.</p>
+
+    <!-- Map SVG -->
+    <div class="glass" style="padding:0;overflow:hidden;margin-bottom:18px;border-radius:16px;aspect-ratio:2.8/1;">
+      <svg viewBox="0 0 1000 360" style="width:100%;height:100%;">
+        <rect width="1000" height="360" fill="transparent"/>
+        <!-- Continents simplified -->
+        <path d="M 80 60 L 200 50 L 240 80 L 230 160 L 200 200 L 150 210 L 100 170 L 80 140 Z" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
+        <path d="M 170 220 L 210 210 L 230 240 L 225 310 L 200 345 L 160 300 L 155 260 Z" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
+        <path d="M 440 55 L 520 50 L 540 70 L 530 110 L 490 130 L 460 120 L 440 100 Z" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
+        <path d="M 460 150 L 540 140 L 570 180 L 565 280 L 530 320 L 490 320 L 460 270 L 450 200 Z" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
+        <path d="M 540 50 L 700 45 L 800 60 L 820 110 L 780 155 L 720 165 L 660 148 L 600 138 L 565 110 L 545 80 Z" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
+        <path d="M 760 260 L 860 250 L 890 290 L 880 350 L 840 360 L 790 350 L 760 320 Z" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
+        <!-- Connections -->
+        <line x1="680" y1="120" x2="580" y2="185" stroke="rgba(42,187,111,.3)" stroke-width="1.2" stroke-dasharray="5 4"/>
+        <line x1="580" y1="185" x2="600" y2="210" stroke="rgba(245,158,11,.25)" stroke-width="1" stroke-dasharray="5 4"/>
+        <line x1="220" y1="140" x2="575" y2="185" stroke="rgba(59,130,246,.2)" stroke-width="1" stroke-dasharray="6 5"/>
+        <!-- Astana -->
+        <circle cx="680" cy="120" r="16" fill="#2ABB6F" fill-opacity=".1"/>
+        <circle cx="680" cy="120" r="6" fill="#2ABB6F" fill-opacity=".9"/>
+        <circle cx="680" cy="120" r="2.5" fill="white"/>
+        <text x="692" y="112" fill="#2ABB6F" font-size="11" font-weight="700" font-family="Inter">Astana</text>
+        <text x="692" y="124" fill="rgba(255,255,255,.4)" font-size="9" font-family="Inter">Live</text>
+        <!-- Dubai -->
+        <circle cx="580" cy="185" r="14" fill="#f59e0b" fill-opacity=".1"/>
+        <circle cx="580" cy="185" r="5.5" fill="#f59e0b" fill-opacity=".9"/>
+        <circle cx="580" cy="185" r="2.5" fill="white"/>
+        <text x="592" y="178" fill="#fbbf24" font-size="11" font-weight="700" font-family="Inter">Dubai</text>
+        <text x="592" y="190" fill="rgba(255,255,255,.4)" font-size="9" font-family="Inter">Q1 2026</text>
+        <!-- Doha -->
+        <circle cx="600" cy="210" r="13" fill="#3b82f6" fill-opacity=".1"/>
+        <circle cx="600" cy="210" r="5" fill="#60a5fa" fill-opacity=".9"/>
+        <circle cx="600" cy="210" r="2" fill="white"/>
+        <text x="612" y="204" fill="#60a5fa" font-size="11" font-weight="700" font-family="Inter">Doha</text>
+        <text x="612" y="216" fill="rgba(255,255,255,.4)" font-size="9" font-family="Inter">Q3 2026</text>
+        <!-- New York -->
+        <circle cx="220" cy="140" r="13" fill="#3b82f6" fill-opacity=".1"/>
+        <circle cx="220" cy="140" r="5" fill="#60a5fa" fill-opacity=".9"/>
+        <circle cx="220" cy="140" r="2" fill="white"/>
+        <text x="232" y="133" fill="#60a5fa" font-size="11" font-weight="700" font-family="Inter">New York</text>
+        <text x="232" y="145" fill="rgba(255,255,255,.4)" font-size="9" font-family="Inter">Series A</text>
+      </svg>
+    </div>
+
+    <div class="g4">
+      <div class="border-card" style="border-color:rgba(42,187,111,.2);">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span style="font-size:18px;">🇰🇿</span><span class="pill" style="background:rgba(42,187,111,.15);color:#2ABB6F;">Live</span></div>
+        <div style="font-weight:700;color:#fff;font-size:0.85rem;">Kazakhstan</div>
+        <div style="font-size:0.7rem;color:#6b7280;margin-top:2px;">1,200+ clubs</div>
+      </div>
+      <div class="border-card" style="border-color:rgba(245,158,11,.2);">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span style="font-size:18px;">🇦🇪</span><span class="pill" style="background:rgba(245,158,11,.15);color:#fbbf24;">Next</span></div>
+        <div style="font-weight:700;color:#fff;font-size:0.85rem;">UAE</div>
+        <div style="font-size:0.7rem;color:#6b7280;margin-top:2px;">300K+ members</div>
+      </div>
+      <div class="border-card" style="border-color:rgba(59,130,246,.2);">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span style="font-size:18px;">🇶🇦</span><span class="pill" style="background:rgba(59,130,246,.15);color:#60a5fa;">Planned</span></div>
+        <div style="font-weight:700;color:#fff;font-size:0.85rem;">Qatar</div>
+        <div style="font-size:0.7rem;color:#6b7280;margin-top:2px;">200K+ residents</div>
+      </div>
+      <div class="border-card" style="border-color:rgba(59,130,246,.2);">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span style="font-size:18px;">🇺🇸</span><span class="pill" style="background:rgba(59,130,246,.15);color:#60a5fa;">Planned</span></div>
+        <div style="font-weight:700;color:#fff;font-size:0.85rem;">USA</div>
+        <div style="font-size:0.7rem;color:#6b7280;margin-top:2px;">Global market</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ SLIDE 8 · WHY NOW -->
+<section class="bg-alt" data-transition="fade">
+  <div class="slide-inner">
+    <div style="margin-bottom:20px;">
+      <span class="badge badge-amber">Why now</span>
+    </div>
+    <h2 style="margin-bottom:28px;">The window of opportunity <span class="grad">is open</span></h2>
+
+    <div class="g2" style="gap:16px;">
+      <div class="glass glass-sm" style="border-color:rgba(245,158,11,.18);">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(245,158,11,.12);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px;">✨</div>
+        <h3 style="color:#fff;margin-bottom:8px;font-size:1rem;">AI moment</h3>
+        <p style="font-size:0.8rem;">The LLM stack has matured to production-quality summarization. Early movers are building the moat right now.</p>
+      </div>
+
+      <div class="glass glass-sm" style="border-color:rgba(42,187,111,.18);">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(42,187,111,.12);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px;">🌍</div>
+        <h3 style="color:#fff;margin-bottom:8px;font-size:1rem;">Global template</h3>
+        <p style="font-size:0.8rem;">The platform architecture is market-agnostic — one product deploys to any country in days.</p>
+      </div>
+
+      <div class="glass glass-sm" style="border-color:rgba(59,130,246,.18);">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(59,130,246,.12);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px;">👥</div>
+        <h3 style="color:#fff;margin-bottom:8px;font-size:1rem;">Network effect</h3>
+        <p style="font-size:0.8rem;">Every new member increases the platform value for everyone else. The competitive barrier grows automatically.</p>
+      </div>
+
+      <div class="glass glass-sm" style="border-color:rgba(139,92,246,.18);">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(139,92,246,.12);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px;">📈</div>
+        <h3 style="color:#fff;margin-bottom:8px;font-size:1rem;">Greenfield market</h3>
+        <p style="font-size:0.8rem;">No global leader in community SaaS. The "Jira for clubs" does not exist yet — we are building it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ SLIDE 9 · CTA -->
+<section class="cover-bg" data-transition="fade">
+  <div class="slide-inner center">
+    <div class="logo-row" style="margin-bottom:32px;justify-content:center;">
+      <img src="image%20(3).png" alt="Sagi" />
+      <span>Sagi</span>
+    </div>
+
+    <h2 style="margin-bottom:16px;font-size:2.8rem;">
+      Invest in the<br>
+      <span class="grad">operating system for communities</span>
+    </h2>
+
+    <p style="max-width:480px;margin:0 auto 36px;font-size:1rem;">
+      Sagi is the infrastructure every professional club in the world has been missing.
+      Already in production. Next step — global scale.
+    </p>
+
+    <!-- Key proof points -->
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:36px;">
+      <div class="glass" style="padding:12px 20px;border-radius:14px;text-align:center;min-width:120px;">
+        <div style="font-size:1.6rem;font-weight:900;color:#2ABB6F;">1,100+</div>
+        <div style="font-size:0.65rem;color:#6b7280;margin-top:4px;">Members live</div>
+      </div>
+      <div class="glass" style="padding:12px 20px;border-radius:14px;text-align:center;min-width:120px;">
+        <div style="font-size:1.6rem;font-weight:900;color:#60a5fa;">42+</div>
+        <div style="font-size:0.65rem;color:#6b7280;margin-top:4px;">Business partners</div>
+      </div>
+      <div class="glass" style="padding:12px 20px;border-radius:14px;text-align:center;min-width:120px;">
+        <div style="font-size:1.6rem;font-weight:900;color:#fbbf24;">100%</div>
+        <div style="font-size:0.65rem;color:#6b7280;margin-top:4px;">Pilot retention</div>
+      </div>
+      <div class="glass" style="padding:12px 20px;border-radius:14px;text-align:center;min-width:120px;">
+        <div style="font-size:1.6rem;font-weight:900;color:#a78bfa;">$0</div>
+        <div style="font-size:0.65rem;color:#6b7280;margin-top:4px;">Churn</div>
+      </div>
+    </div>
+
+    <a href="mailto:info@sagi.kz" style="
+      display:inline-flex;align-items:center;gap:10px;
+      background:linear-gradient(135deg,#2ABB6F,#1E9E5A);
+      color:#fff;font-weight:700;font-size:1rem;
+      padding:14px 32px;border-radius:16px;text-decoration:none;
+      letter-spacing:-.01em;
+    ">
+      📧 info@sagi.kz — Contact the Team
+    </a>
+
+    <div class="hr" style="max-width:360px;margin:28px auto 14px;"></div>
+    <p style="font-size:0.65rem;color:#374151;">© 2025 Sagi Technologies</p>
+  </div>
+</section>
+
+</div><!-- /slides -->
+</div><!-- /reveal -->
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    transition: 'fade',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    slideNumber: 'c/t',
+    controls: true,
+    progress: true,
+    center: false,
+    width: 1280,
+    height: 720,
+    margin: 0,
+    minScale: 0.2,
+    maxScale: 2.0,
+    plugins: [],
+  });
+</script>
+</body>
+</html>
