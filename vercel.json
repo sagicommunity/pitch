@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/pitch.html" },
+    { "source": "/presentation", "destination": "/presentation.html" }
+  ]
+}
